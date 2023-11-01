@@ -1,15 +1,14 @@
 package org.example;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.List;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         FileFinder fileFinder = new FileFinder();
+        FileOperations fileOperations = new FileOperations();
+
         String diskName = "F:\\";
         String folderName = "logs";
 
@@ -18,16 +17,15 @@ public class Main {
         } else System.out.println("Disk not exist!");
 
         System.out.println();
-        //System.out.println(fileFinder.folderSearcher(diskName, folderName));
-
-
         String logsPath = fileFinder.folderSearcher(diskName, folderName);
 
-        List<String> files = fileFinder.listOfLogFiles(Paths.get(logsPath), "log");
-        files.forEach(x -> {
-            System.out.println(x);
-        });
 
+        System.out.println();
+        System.out.println(Arrays.stream(fileFinder.logFiles(logsPath)).toList());
+
+        System.out.println();
+        File[] logFiles = fileFinder.logFiles(logsPath);
+        System.out.println(Arrays.stream(fileOperations.sortByLastModifed(logFiles)).toList());
 
     }
 

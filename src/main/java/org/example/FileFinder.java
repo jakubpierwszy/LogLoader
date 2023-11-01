@@ -1,12 +1,7 @@
 package org.example;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.io.FilenameFilter;
 
 public class FileFinder {
 
@@ -35,16 +30,17 @@ public class FileFinder {
         return "Searching in subfolders...";
     }
 
-    public List<String> listOfLogFiles(Path path, String fileExtension) throws IOException {
-        List<String> result;
-        try (Stream<Path> walk = Files.walk(path)) {
-            result = walk
-                    .filter(p -> !Files.isDirectory(p))
-                    .map(p -> p.toString().toLowerCase())
-                    .filter(p -> p.endsWith(fileExtension))
-                    .collect(Collectors.toList());
-        }
-        return result;
+
+    public File[] logFiles(String paths) {
+        File directory = new File(paths);
+        File[] fList = directory.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return name.toLowerCase().endsWith(".log");
+            }
+        });
+
+        return fList;
     }
 
 
@@ -70,6 +66,7 @@ public class FileFinder {
     }
 
 
+    /*
     public void listFilesAndFilesSubDireddctories(String directoryName) {
         File directory = new File(directoryName);
         File[] fList = directory.listFiles();
@@ -91,5 +88,17 @@ public class FileFinder {
 
         }
     }
-
+*/
+    /*public List<String> listOfLogFiles(Path path, String fileExtension) throws IOException {
+        List<String> result;
+        try (Stream<Path> walk = Files.walk(path)) {
+            result = walk
+                    .filter(p -> !Files.isDirectory(p))
+                    .map(p -> p.toString().toLowerCase())
+                    .filter(p -> p.endsWith(fileExtension))
+                    .collect(Collectors.toList());
+        }
+        return result;
+    }
+    */
 }
