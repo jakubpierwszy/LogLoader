@@ -27,6 +27,10 @@ public class Main {
         File[] logFiles = fileFinder.logFiles(logsPath);
         System.out.println(Arrays.stream(fileOperations.sortByLastModifed(logFiles)).toList());
 
+        System.out.println();
+        fileOperations.readFile(new File("F:\\logs\\zadanie_server.log"));
+
+
     }
 
 
