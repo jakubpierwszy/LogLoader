@@ -46,7 +46,7 @@ public class Counters {
         return dateList;
     }
 
-    public List<Map.Entry<String, Integer>> coutLogsBySeverity() {
+    public List<Map.Entry<String, Integer>> countLogsBySeverity() {
         List<String> logLevels = fileOperations.logLevelsPattern(log);
         Map<String, Integer> mapSeverity = new HashMap<>();
         for (String log : logLevels) {
@@ -77,6 +77,12 @@ public class Counters {
                 .setScale(1, RoundingMode.HALF_UP)
                 .doubleValue();
         return truncatedDouble;
+    }
+
+    public Integer countOfUniqueLibraries() {
+        List<String> librariesList = fileOperations.librariesPattern(log);
+        List<String> uniqueList = new ArrayList<>(new HashSet<>(librariesList));
+        return uniqueList.size();
     }
 
     public Integer severityMarker(String severity) {

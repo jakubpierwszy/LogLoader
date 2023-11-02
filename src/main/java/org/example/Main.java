@@ -26,10 +26,11 @@ public class Main {
 
             System.out.println(counter.rangeTimeOfLogs());
 
-            System.out.println("Numbers of logs, grouped by severty: " + counter.coutLogsBySeverity());
+            System.out.println("Numbers of logs, grouped by severty: " + counter.countLogsBySeverity());
 
             System.out.println("Quantity ratio logs with severity ERROR or higher: " + counter.quantityRatio() + "%");
 
+            System.out.println("Number of unique libraries: " + counter.countOfUniqueLibraries());
         } else System.out.println("Disk not exist!");
 
 
