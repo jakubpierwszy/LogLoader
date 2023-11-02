@@ -85,6 +85,13 @@ public class Counters {
         return uniqueList.size();
     }
 
+    public long countTimeToReadFile() throws IOException {
+        long startTime = System.nanoTime();
+        fileOperations.readFile(new File("F:\\logs\\zadanie_server.log"));
+        long estimatedTime = System.nanoTime() - startTime;
+        return estimatedTime;
+    }
+
     public Integer severityMarker(String severity) {
         switch (severity) {
             case "OFF": {

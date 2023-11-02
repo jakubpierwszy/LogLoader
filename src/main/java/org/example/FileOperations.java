@@ -25,7 +25,6 @@ public class FileOperations {
     public String readFile(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String content = reader.lines().collect(Collectors.joining());
-
         reader.close();
         return content;
     }
