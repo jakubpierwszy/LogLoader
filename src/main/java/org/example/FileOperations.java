@@ -22,18 +22,12 @@ public class FileOperations {
         return files;
     }
 
-    public void readFile(File file) throws IOException {
+    public String readFile(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        String currentLine = reader.lines().collect(Collectors.joining());
-        //System.out.println(currentLine);
-
-        //datePattern(currentLine);
-        //System.out.println(timePattern(currentLine).get(10));
-        //System.out.println(logLevelsPattern(currentLine));
-        System.out.println(librariesPattern(currentLine));
-
+        String content = reader.lines().collect(Collectors.joining());
 
         reader.close();
+        return content;
     }
 
     public List<String> datePattern(String logs) {
@@ -54,6 +48,16 @@ public class FileOperations {
             times.add(matcher.group());
         }
         return times;
+    }
+
+    public List<String> datesAndTimesPattern(String logs) {
+        Pattern pattern = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}\\s+[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,3})?");
+        Matcher matcher = pattern.matcher(logs);
+        List<String> dates = new ArrayList<>();
+        while (matcher.find()) {
+            dates.add(matcher.group());
+        }
+        return dates;
     }
 
     public List<String> logLevelsPattern(String logs) {
