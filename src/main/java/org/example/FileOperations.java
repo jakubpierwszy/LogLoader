@@ -29,6 +29,8 @@ public class FileOperations {
 
         //datePattern(currentLine);
         //System.out.println(timePattern(currentLine).get(10));
+        //System.out.println(logLevelsPattern(currentLine));
+        System.out.println(librariesPattern(currentLine));
 
 
         reader.close();
@@ -54,4 +56,32 @@ public class FileOperations {
         return times;
     }
 
+    public List<String> logLevelsPattern(String logs) {
+        final Pattern pattern = Pattern.compile("(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|FATAL)");
+        final Matcher matcher = pattern.matcher(logs);
+        List<String> levels = new ArrayList<>();
+        while (matcher.find()) {
+            levels.add(matcher.group());
+        }
+        return levels;
+    }
+
+    public List<String> librariesPattern(String logs) {
+        final Pattern pattern = Pattern.compile("(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|FATAL)\\s+\\[[^\\]]*\\] ");
+        final Matcher matcher = pattern.matcher(logs);
+        String matcherToString = "";
+        while (matcher.find()) {
+            matcherToString += matcher.group();
+        }
+
+        final Pattern pattern1 = Pattern.compile("\\[[^\\]]*\\]");
+        final Matcher matcher1 = pattern1.matcher(matcherToString);
+
+        List<String> libraries = new ArrayList<>();
+        while (matcher1.find()) {
+            libraries.add(matcher1.group());
+        }
+
+        return libraries;
+    }
 }
