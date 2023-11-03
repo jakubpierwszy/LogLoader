@@ -25,7 +25,7 @@ public class Counters {
         return "Time between first and last log is " + sec + "sec. In hours " + h + "h";
     }
 
-    public List<Date> parsingListToDate(String logs) throws IOException {
+    public List<Date> parsingListToDate(String logs) {
         List<String> datesAndTimes = fileOperations.datesAndTimesPattern(logs);
         ArrayList<Date> dateList = new ArrayList<Date>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
