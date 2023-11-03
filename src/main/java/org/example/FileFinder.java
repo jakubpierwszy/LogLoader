@@ -22,16 +22,17 @@ public class FileFinder {
 
         for (File file : fList) {
             if (file.isDirectory()) {
-                if (file.getName().equals(folderName)) {
+                if (file.getName().toLowerCase().equals(folderName)) {
                     return file.getAbsolutePath();
                 }
             }
         }
-        return "Searching in subfolders...";
+
+        return "";
     }
 
 
-    public File[] logFiles(String paths) {
+    public File[] logFiles(String paths) throws NullPointerException {
         File directory = new File(paths);
         File[] fList = directory.listFiles(new FilenameFilter() {
             @Override
@@ -43,62 +44,4 @@ public class FileFinder {
         return fList;
     }
 
-
-    public void subFolderSearcher(String diskName, String folderName) {
-        File directory = new File(diskName);
-        File[] fList = directory.listFiles();
-
-        try {
-            for (File file : fList) {
-                if (file.isDirectory()) {
-                    if (file.getName().equals("logs")) {
-                        System.out.println();
-                        System.out.println("Path to logs folder: " + file.getPath());
-                        break;
-                    }
-                    subFolderSearcher(file.getAbsolutePath(), folderName);
-
-                }
-            }
-        } catch (NullPointerException exception) {
-
-        }
-    }
-
-
-    /*
-    public void listFilesAndFilesSubDireddctories(String directoryName) {
-        File directory = new File(directoryName);
-        File[] fList = directory.listFiles();
-
-        try {
-            for (File file : fList) {
-                if (file.isFile()) {
-                    System.out.println(file.getAbsolutePath());
-                } else if (file.isDirectory()) {
-                    if (file.getName().equals("logs")) {
-                        System.out.println();
-                        System.out.println("Znaleziono");
-                    }
-                    System.out.println(file.getAbsolutePath());
-                    listFilesAndFilesSubDireddctories(file.getAbsolutePath());
-                }
-            }
-        } catch (NullPointerException exception) {
-
-        }
-    }
-*/
-    /*public List<String> listOfLogFiles(Path path, String fileExtension) throws IOException {
-        List<String> result;
-        try (Stream<Path> walk = Files.walk(path)) {
-            result = walk
-                    .filter(p -> !Files.isDirectory(p))
-                    .map(p -> p.toString().toLowerCase())
-                    .filter(p -> p.endsWith(fileExtension))
-                    .collect(Collectors.toList());
-        }
-        return result;
-    }
-    */
 }

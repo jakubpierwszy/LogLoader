@@ -10,29 +10,23 @@ import java.time.*;
 import java.util.*;
 
 public class Counters {
-    FileFinder fileFinder = new FileFinder();
     FileOperations fileOperations = new FileOperations();
-    File file = new File("F:\\logs\\zadanie_server.log");
-    String log = fileOperations.readFile(file);
 
-    public Counters() throws IOException {
-    }
-
-    public String rangeTimeOfLogs() throws ParseException {
-        List<Date> dateList = parsingListToDate();
+    public String rangeTimeOfLogs(String logs) throws IOException {
+        List<Date> dateList = parsingListToDate(logs);
         Date maxDate = dateList.stream().max(Date::compareTo).get();
         Date minDate = dateList.stream().min(Date::compareTo).get();
         LocalDateTime maxDateLocal = maxDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         LocalDateTime minDateLocal = minDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         Duration duration = Duration.between(maxDateLocal, minDateLocal);
-        Long sec = Math.abs(duration.toSeconds());
-        Integer min = Math.toIntExact(sec / 60);
-        Integer h = Math.toIntExact(min / 60);
+        long sec = Math.abs(duration.toSeconds());
+        int min = Math.toIntExact(sec / 60);
+        int h = Math.toIntExact(min / 60);
         return "Time between first and last log is " + sec + "sec. In hours " + h + "h";
     }
 
-    public List<Date> parsingListToDate() throws ParseException {
-        List<String> datesAndTimes = fileOperations.datesAndTimesPattern(log);
+    public List<Date> parsingListToDate(String logs) throws IOException {
+        List<String> datesAndTimes = fileOperations.datesAndTimesPattern(logs);
         ArrayList<Date> dateList = new ArrayList<Date>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -46,8 +40,8 @@ public class Counters {
         return dateList;
     }
 
-    public List<Map.Entry<String, Integer>> countLogsBySeverity() {
-        List<String> logLevels = fileOperations.logLevelsPattern(log);
+    public List<Map.Entry<String, Integer>> countLogsBySeverity(String logs) {
+        List<String> logLevels = fileOperations.logLevelsPattern(logs);
         Map<String, Integer> mapSeverity = new HashMap<>();
         for (String log : logLevels) {
             mapSeverity.put(log, Collections.frequency(logLevels, log));
@@ -64,8 +58,8 @@ public class Counters {
         return entryList;
     }
 
-    public Double quantityRatio() {
-        List<String> logLevels = fileOperations.logLevelsPattern(log);
+    public Double quantityRatio(String logs) {
+        List<String> logLevels = fileOperations.logLevelsPattern(logs);
         Double count = 0.0;
         for (String log : logLevels) {
             if (severityMarker(log) >= 200) {
@@ -79,15 +73,15 @@ public class Counters {
         return truncatedDouble;
     }
 
-    public Integer countOfUniqueLibraries() {
-        List<String> librariesList = fileOperations.librariesPattern(log);
+    public Integer countOfUniqueLibraries(String logs) {
+        List<String> librariesList = fileOperations.librariesPattern(logs);
         List<String> uniqueList = new ArrayList<>(new HashSet<>(librariesList));
         return uniqueList.size();
     }
 
-    public long countTimeToReadFile() throws IOException {
+    public long countTimeToReadFile(File file) throws IOException {
         long startTime = System.nanoTime();
-        fileOperations.readFile(new File("F:\\logs\\zadanie_server.log"));
+        fileOperations.readFile(file);
         long estimatedTime = System.nanoTime() - startTime;
         return estimatedTime;
     }

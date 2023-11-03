@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class FileOperations {
 
-    public File[] sortByLastModifed(File[] files) {
+    public File[] sortByLastModified(File[] files) {
         Arrays.sort(files, new Comparator<File>() {
 
             @Override
             public int compare(File f1, File f2) {
-                return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+                return Long.compare(f2.lastModified(), f1.lastModified());
             }
         });
         return files;
