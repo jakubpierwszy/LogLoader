@@ -14,7 +14,7 @@ public class Main {
         String diskName = "D:\\";
         String folderName = "logs";
 
-        if (FileFinder.checkIfDiskExist(diskName)) {
+        if (fileFinder.checkIfDiskExist(diskName)) {
             System.out.println("Found disk: " + diskName);
 
 

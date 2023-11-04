@@ -1,0 +1,7 @@
+CREATE TABLE Logs (
+	id NUMERIC,
+	Time DATETIME,
+	Severity TEXT(5),
+	Library TEXT(100),
+	Message TEXT
+);

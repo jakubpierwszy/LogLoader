@@ -5,7 +5,7 @@ import java.io.FilenameFilter;
 
 public class FileFinder {
 
-    public static boolean checkIfDiskExist(String diskName) {
+    public boolean checkIfDiskExist(String diskName) {
         File[] paths;
         paths = File.listRoots();
         for (File path : paths) {
